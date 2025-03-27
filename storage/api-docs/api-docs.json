@@ -1,0 +1,976 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Movie API",
+        "description": "API for managing films and screening",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000",
+            "description": "Local development server"
+        }
+    ],
+    "paths": {
+        "/api/films": {
+            "get": {
+                "tags": [
+                    "Films"
+                ],
+                "summary": "Az összes filmet kilistázza",
+                "operationId": "271e474415d2f29bf3c163247c5f4639",
+                "responses": {
+                    "200": {
+                        "description": "Az összes filmet kilistázza"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/films/show/{id}": {
+            "get": {
+                "tags": [
+                    "Films"
+                ],
+                "summary": "Get a specific film by ID",
+                "operationId": "8ad2497b89a853c96b7c561efdc14c2a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the film to retrieve",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Film details"
+                    },
+                    "404": {
+                        "description": "Film not found"
+                    }
+                }
+            }
+        },
+        "/api/films/createNewFilm": {
+            "post": {
+                "tags": [
+                    "Films"
+                ],
+                "summary": "Create a new film",
+                "description": "Creates a new film with the provided details.",
+                "operationId": "createFilm",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "age_rating",
+                                    "language"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "Inception"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "A mind-bending thriller."
+                                    },
+                                    "age_rating": {
+                                        "type": "string",
+                                        "example": "PG-13"
+                                    },
+                                    "language": {
+                                        "type": "string",
+                                        "example": "English"
+                                    },
+                                    "cover_image": {
+                                        "type": "string",
+                                        "example": "https://example.com/image.jpg",
+                                        "nullable": true
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Film created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "title": {
+                                            "type": "string",
+                                            "example": "Inception"
+                                        },
+                                        "description": {
+                                            "type": "string",
+                                            "example": "A mind-bending thriller."
+                                        },
+                                        "age_rating": {
+                                            "type": "string",
+                                            "example": "PG-13"
+                                        },
+                                        "language": {
+                                            "type": "string",
+                                            "example": "English"
+                                        },
+                                        "cover_image": {
+                                            "type": "string",
+                                            "example": "https://example.com/image.jpg"
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "example": "2025-03-26T18:56:49.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "example": "2025-03-26T18:56:49.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid input"
+                    }
+                }
+            }
+        },
+        "/api/films/update/{id}": {
+            "put": {
+                "tags": [
+                    "Films"
+                ],
+                "summary": "Update a film by ID",
+                "description": "Update the details of a specific film by its ID",
+                "operationId": "016f9b24cca70cfd1b6c1d33a7b10e6a",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the film to be updated",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "title",
+                                    "description",
+                                    "age_rating",
+                                    "language"
+                                ],
+                                "properties": {
+                                    "title": {
+                                        "type": "string",
+                                        "example": "The Matrix"
+                                    },
+                                    "description": {
+                                        "type": "string",
+                                        "example": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers."
+                                    },
+                                    "age_rating": {
+                                        "type": "integer",
+                                        "example": 18
+                                    },
+                                    "language": {
+                                        "type": "string",
+                                        "example": "English"
+                                    },
+                                    "cover_image": {
+                                        "type": "string",
+                                        "example": "matrix_cover.jpg"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Film successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Film"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Film not found"
+                    }
+                }
+            }
+        },
+        "/api/films/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Films"
+                ],
+                "summary": "Delete a film by ID. Delete the Screen as well",
+                "description": "This endpoint deletes a film from the database by its ID.",
+                "operationId": "deleteFilm",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the film to be deleted",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Film deleted successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Film deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Film not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Film not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/films/search": {
+            "get": {
+                "tags": [
+                    "Films"
+                ],
+                "summary": "Search films by title, language, and age rating",
+                "description": "Returns a list of films that match the search criteria. Filters can be applied based on title, language, and age rating.",
+                "operationId": "searchFilms",
+                "parameters": [
+                    {
+                        "name": "title",
+                        "in": "query",
+                        "description": "Title of the film to search for",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "Matrix"
+                        }
+                    },
+                    {
+                        "name": "language",
+                        "in": "query",
+                        "description": "Language of the film",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "English"
+                        }
+                    },
+                    {
+                        "name": "age_rating",
+                        "in": "query",
+                        "description": "Age rating of the film",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "example": "12"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "List of films that match the search criteria",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Film"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid search parameters"
+                    },
+                    "404": {
+                        "description": "No films found matching the criteria"
+                    }
+                }
+            }
+        },
+        "/api/vetitesek": {
+            "get": {
+                "tags": [
+                    "Vetitesek"
+                ],
+                "summary": "Get list of all screenings",
+                "operationId": "49bc639584d68925757f772a5be41565",
+                "responses": {
+                    "200": {
+                        "description": "List of all screenings",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Vetitesek"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
+        "/api/vetitesek/create": {
+            "post": {
+                "tags": [
+                    "Vetitesek"
+                ],
+                "summary": "Create a new Vetitesek record",
+                "description": "This endpoint allows you to create a new Vetitesek record with time, available seats, and film ID.",
+                "operationId": "21664f3d276897b44abe4923a3c32e1a",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "time",
+                                    "available_seats",
+                                    "film_id"
+                                ],
+                                "properties": {
+                                    "time": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-03-27 19:00:00"
+                                    },
+                                    "available_seats": {
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "film_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Vetitesek successfully created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "time": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27 19:00:00"
+                                        },
+                                        "available_seats": {
+                                            "type": "integer",
+                                            "example": 50
+                                        },
+                                        "film_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27T10:00:00.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27T10:00:00.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vetitesek/show/{id}": {
+            "get": {
+                "tags": [
+                    "Vetitesek"
+                ],
+                "summary": "Get a single Vetitesek record by ID",
+                "description": "This endpoint allows you to fetch a Vetitesek record based on the provided ID.",
+                "operationId": "331eb7d9c31886033a519aa66e371729",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the Vetitesek record",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the Vetitesek record",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "time": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27 19:00:00"
+                                        },
+                                        "available_seats": {
+                                            "type": "integer",
+                                            "example": 50
+                                        },
+                                        "film_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27T10:00:00.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27T10:00:00.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Vetitesek record not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Vetitesek not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vetitesek/update/{id}": {
+            "put": {
+                "tags": [
+                    "Vetitesek"
+                ],
+                "summary": "Update a Vetitesek (Screening) record",
+                "description": "This endpoint allows you to update an existing Vetitesek (screening) record with new time, available seats, and film ID.",
+                "operationId": "2f00921769ef826bd387c9b3070f54a6",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the Vetitesek (screening) to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "time",
+                                    "available_seats",
+                                    "film_id"
+                                ],
+                                "properties": {
+                                    "time": {
+                                        "type": "string",
+                                        "format": "date-time",
+                                        "example": "2025-03-27 19:00:00"
+                                    },
+                                    "available_seats": {
+                                        "type": "integer",
+                                        "example": 50
+                                    },
+                                    "film_id": {
+                                        "type": "integer",
+                                        "example": 1
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Vetitesek successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "time": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27 19:00:00"
+                                        },
+                                        "available_seats": {
+                                            "type": "integer",
+                                            "example": 50
+                                        },
+                                        "film_id": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "created_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27T10:00:00.000000Z"
+                                        },
+                                        "updated_at": {
+                                            "type": "string",
+                                            "format": "date-time",
+                                            "example": "2025-03-27T10:00:00.000000Z"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Screening not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Screening not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Validation error"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vetitesek/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Vetitesek"
+                ],
+                "summary": "Delete a Vetitesek (Screening) record",
+                "description": "This endpoint allows you to delete a Vetitesek (screening) record by its ID.",
+                "operationId": "62e33993fa939f8a7ae90dd64dac1740",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "The ID of the Vetitesek (screening) to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Screening successfully deleted",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Screening deleted successfully"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Screening not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Screening not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid ID format"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/vetitesek/search": {
+            "get": {
+                "tags": [
+                    "Vetitesek"
+                ],
+                "summary": "Search for screenings (vetitesek) by multiple parameters",
+                "description": "This endpoint allows you to search for screenings based on time, film ID, available seats, and film title.",
+                "operationId": "746519ccefa31bfdde7d53848f88da9c",
+                "parameters": [
+                    {
+                        "name": "time",
+                        "in": "query",
+                        "description": "The time of the screening you want to search for. Use together with time_condition to filter.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date-time"
+                        }
+                    },
+                    {
+                        "name": "time_condition",
+                        "in": "query",
+                        "description": "Specify how to compare the time: 'before' to get screenings before the given time, 'after' to get screenings after the given time, or 'equal' to match exactly the given time. Default is 'equal'.",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "default": "equal",
+                            "enum": [
+                                "before",
+                                "after",
+                                "equal"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "film_id",
+                        "in": "query",
+                        "description": "Filter screenings by the film's ID.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "min_available_seats",
+                        "in": "query",
+                        "description": "Filter screenings by the minimum number of available seats. Only screenings with at least the specified number of available seats will be returned.",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "film_title",
+                        "in": "query",
+                        "description": "Search screenings by the film's title. Use partial matching with LIKE.",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved screenings matching the provided filters",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "time": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2025-03-27 19:00:00"
+                                            },
+                                            "available_seats": {
+                                                "type": "integer",
+                                                "example": 50
+                                            },
+                                            "film_id": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "created_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2025-03-27T10:00:00.000000Z"
+                                            },
+                                            "updated_at": {
+                                                "type": "string",
+                                                "format": "date-time",
+                                                "example": "2025-03-27T10:00:00.000000Z"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request. Invalid request parameters.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Invalid request parameters"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No screenings found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "No screenings found for given parameters"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Film": {
+                "required": [
+                    "id",
+                    "title",
+                    "description",
+                    "age_rating",
+                    "language",
+                    "created_at",
+                    "updated_at"
+                ],
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "title": {
+                        "type": "string",
+                        "example": "The Matrix"
+                    },
+                    "description": {
+                        "type": "string",
+                        "example": "A computer hacker learns from mysterious rebels about the true nature of his reality and his role in the war against its controllers."
+                    },
+                    "age_rating": {
+                        "type": "integer",
+                        "example": 18
+                    },
+                    "language": {
+                        "type": "string",
+                        "example": "English"
+                    },
+                    "cover_image": {
+                        "type": "string",
+                        "example": "matrix_cover.jpg"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-26T18:56:49"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2025-03-26T18:56:49"
+                    }
+                },
+                "type": "object"
+            },
+            "Vetitesek": {
+                "required": [
+                    "time",
+                    "available_seats",
+                    "film_id"
+                ],
+                "properties": {
+                    "time": {
+                        "description": "The time when the film is scheduled to be shown",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "available_seats": {
+                        "description": "The number of available seats for the screening",
+                        "type": "integer"
+                    },
+                    "film_id": {
+                        "description": "The ID of the film being screened",
+                        "type": "integer"
+                    },
+                    "film": {
+                        "$ref": "#/components/schemas/Film"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Films",
+            "description": "Films"
+        },
+        {
+            "name": "Vetitesek",
+            "description": "Vetitesek"
+        }
+    ]
+}
