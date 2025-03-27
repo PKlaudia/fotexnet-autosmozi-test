@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Film;
-use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Database\Eloquent\Factories\Factory;use Illuminate\Support\Facades\App;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Vetitesek>
